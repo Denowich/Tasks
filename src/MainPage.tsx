@@ -5,11 +5,11 @@ export const MainPage = () => {
     const [tasks, setTasks] = useState(null);
 
     useEffect(() => {
-        fetch( 'https://trelly.it-incubator.app/api/1.0/boards/tasks',{
+        fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
             headers: {
                 'api-key': '48ba2111-574e-4c4e-8c56-a5788c92743b'
             }
-        }).then(res=>res.json()).then(json=>setTasks(json.data));
+        }).then(res => res.json()).then(json => setTasks(json.data));
     }, []);
 
 
@@ -37,25 +37,32 @@ export const MainPage = () => {
 
     return (
         <div>
-            <h3>Tasks</h3>
-            <button onClick={onResetSelectionClick}>reset selection</button>
+            <h3>Список задач: </h3>
+            <button onClick={onResetSelectionClick}>Reset selection</button>
             {/**/}
             <ul style={{display: 'flex', gap: '30px'}}>
                 <ol>
                     {tasks.map((task) => (
-                        <li key={task.id}
+                        <li className= 'list-item' key={task.id }
                             style={{border: task.id === selectTaskId ? '5px solid tomato' : '2px solid green'}}>
                             <div>
                                 <div onClick={() => {
                                     setSelectTaskId(task.id)
                                 }}>
-                                    {task.attributes.title}
+                                    <p>
+                                        <b>Заголовок: {task.attributes.title}</b>
+                                    </p>
                                 </div>
 
-                                <div><input type={'checkbox'} checked={task.attributes.status}/>
-                                </div>
                                 <div>
-                                    {task.attributes.addedAt}
+                                    <p>
+                                        <b>Статус: <input type={'checkbox'} checked={task.attributes.status}/></b>
+                                    </p>
+                                    </div>
+                                <div>
+                                    <p>
+                                        <b>Дата создания задачи: {new Date(task.attributes.addedAt).toLocaleDateString()}</b>
+                                    </p>
                                 </div>
 
                             </div>
