@@ -1,13 +1,13 @@
 import {useEffect, useState} from "react";
 
 export const MainPage = () => {
-    const [selectTaskId, setSelectTaskId] = useState(null);
+    const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [tasks, setTasks] = useState(null);
 
     useEffect(() => {
         fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
             headers: {
-                'api-key': '48ba2111-574e-4c4e-8c56-a5788c92743b'
+                'api-key': ''
             }
         }).then(res => res.json()).then(json => setTasks(json.data));
     }, []);
@@ -30,24 +30,22 @@ export const MainPage = () => {
         )
     }
 
-
-    const onResetSelectionClick = () => {
-        setSelectTaskId(null);
-    }
-
     return (
         <div>
             <h3>Список задач: </h3>
-            <button onClick={onResetSelectionClick}>Reset selection</button>
+            <button onClick={() => {
+                setSelectedTaskId(null);
+            }}>Reset selection
+            </button>
             {/**/}
             <ul style={{display: 'flex', gap: '30px'}}>
                 <ol>
                     {tasks.map((task) => (
-                        <li className= 'list-item' key={task.id }
-                            style={{border: task.id === selectTaskId ? '5px solid tomato' : '2px solid green'}}>
+                        <li className='list-item' key={task.id}
+                            style={{border: task.id === selectedTaskId ? '5px solid tomato' : '2px solid green'}}>
                             <div>
                                 <div onClick={() => {
-                                    setSelectTaskId(task.id)
+                                    setSelectedTaskId(task.id)
                                 }}>
                                     <p>
                                         <b>Заголовок: {task.attributes.title}</b>
@@ -58,10 +56,11 @@ export const MainPage = () => {
                                     <p>
                                         <b>Статус: <input type={'checkbox'} checked={task.attributes.status}/></b>
                                     </p>
-                                    </div>
+                                </div>
                                 <div>
                                     <p>
-                                        <b>Дата создания задачи: {new Date(task.attributes.addedAt).toLocaleDateString()}</b>
+                                        <b>Дата создания
+                                            задачи: {new Date(task.attributes.addedAt).toLocaleDateString()}</b>
                                     </p>
                                 </div>
 
