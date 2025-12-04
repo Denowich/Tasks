@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export const MainPage = () => {
+export function MainPage () {
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [tasks, setTasks] = useState(null);
 
@@ -71,7 +71,7 @@ export const MainPage = () => {
                     ))}
                 </ol>
                 <div>
-                    <h3>Detail :</h3>
+                    <h2>Detail :</h2>
                 </div>
             </ul>
         </div>
