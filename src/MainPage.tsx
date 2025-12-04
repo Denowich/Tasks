@@ -3,11 +3,12 @@ import {useEffect, useState} from "react";
 export function MainPage () {
     const [selectedTaskId, setSelectedTaskId] = useState(null);
     const [tasks, setTasks] = useState(null);
+    const [selectedTask, setSelectedTask] = useState(null);
 
     useEffect(() => {
         fetch('https://trelly.it-incubator.app/api/1.0/boards/tasks', {
             headers: {
-                'api-key': ''
+                'api-key': '48ba2111-574e-4c4e-8c56-a5788c92743b'
             }
         }).then(res => res.json()).then(json => setTasks(json.data));
     }, []);
@@ -35,6 +36,7 @@ export function MainPage () {
             <h3>Список задач: </h3>
             <button onClick={() => {
                 setSelectedTaskId(null);
+                setSelectedTask(null)
             }}>Reset selection
             </button>
             {/**/}
@@ -46,6 +48,7 @@ export function MainPage () {
                             <div>
                                 <div onClick={() => {
                                     setSelectedTaskId(task.id)
+                                    setSelectedTask(task)
                                 }}>
                                     <p>
                                         <b>Заголовок: {task.attributes.title}</b>
@@ -72,6 +75,17 @@ export function MainPage () {
                 </ol>
                 <div>
                     <h2>Detail :</h2>
+                    {!selectedTask && !selectedTaskId && 'task is not selected'}
+                    {selectedTask && !selectedTaskId && 'loading...'}
+                    {selectedTask && selectedTaskId && selectedTask.id !== selectedTaskId && 'loading...'}
+
+                    {selectedTask && <div>
+                        {selectedTask.attributes.title}
+                        <div>
+                            <h4>Description :</h4>
+                            {selectedTask.attributes.description ?? 'no description'}
+                        </div>
+                    </div>}
                 </div>
             </ul>
         </div>
