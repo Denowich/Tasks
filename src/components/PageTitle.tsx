@@ -1,3 +1,3 @@
-export function PageTitl() {
-    return <h1>Список задач :</h1>
+export function PageTitle() {
+    return <h1 className = 'title'>Trelly</h1>
 }
